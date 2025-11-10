@@ -1,6 +1,6 @@
 # Cloud Resume Challenge
 
-A serverless resume website built on AWS Cloud.
+A serverless resume website built on AWS Cloud, with automatic deployment with GitHub Actions.
 
 ## Live Site
 
@@ -18,7 +18,7 @@ Visit: [https://james-hodson.com](https://james-hodson.com)
 
 - **Static Site Generator**: Eleventy (11ty)
 - **Cloud Provider**: AWS
-- **Infrastructure**: S3, CloudFront, Route 53, API Gateway, Lambda, DynamoDB
+- **Infrastructure**: S3, CloudFront, Route 53, API Gateway, Lambda, DynamoDB, GitHub Actions
 - **Languages**: HTML, CSS, JavaScript, Python
 - **Analytics**: AWS Glue, Athena
 
@@ -40,6 +40,7 @@ The visitor counter uses a serverless architecture:
 ├── src/                    # Eleventy source files
 │   ├── _includes/         # Layout templates
 │   ├── css/               # Stylesheets
+│   ├── images/            # Images for projects page
 │   └── index.md           # Homepage content
 ├── lambda/                # Lambda function code
 │   └── visitor_counter.py
