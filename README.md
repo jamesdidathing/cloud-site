@@ -48,36 +48,4 @@ The visitor counter uses a serverless architecture:
 └── README.md              # This file
 ```
 
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Node.js and npm
-- AWS Account
-- AWS CLI configured
-
-### Local Development
-```bash
-# Install dependencies
-npm install
-
-# Run development server
-npm start
-
-# Build for production
-npm run build
-```
-
-## 📜 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🤝 Connect
-
-- LinkedIn: [Your Profile]
-- Twitter: [@yourhandle]
-- Email: your.email@example.com
-
----
-
 Built as part of the [Cloud Resume Challenge](https://cloudresumechallenge.dev/)
