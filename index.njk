@@ -1,0 +1,63 @@
+---
+layout: base.njk
+title: James Hodson - Welcome
+---
+
+<div class="hero">
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="/" class="active">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/projects">Projects</a></li>
+            <li><a href="/contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="hero-content">
+        <h1 class="hero-title">James Hodson</h1>
+        <h2 class="hero-subtitle"></h2>
+        <p class="hero-description">
+            Research Software Engineer specialising in software development and open, FAIR data. 
+            This website is built and deployed using the AWS cloud stack.
+        </p>
+        
+        <div class="visitor-counter-wrapper">
+            <div class="visitor-counter">
+                <div class="counter-display">
+                    <div class="counter-icon">📊</div>
+                    <div class="counter-content">
+                        <div class="counter-label">Total Site Visitors</div>
+                        <div class="counter-number" id="visitor-count">Loading...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<script>
+    fetch('https://ayqpdz9gvl.execute-api.us-east-1.amazonaws.com/prod/count')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('visitor-count').innerText = data.count.toLocaleString();
+        })
+        .catch(error => {
+            document.getElementById('visitor-count').innerText = 'Error';
+        });
+</script>
+        
+        <div class="hero-buttons-wrapper">
+            <div class="hero-buttons">
+                <a href="/projects" class="btn-primary">🚀 View My Work</a>
+                <a href="/about" class="btn-secondary">👤 About Me</a>
+            </div>
+        </div>
+
+        <div class="social-links">
+            <a href="https://github.com/jamesdidathing" target="_blank" class="social-link github">
+                GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/james-a-hodson/" target="_blank" class="social-link linkedin">
+                LinkedIn
+            </a>
+        </div>
+    </div>
+</div>
