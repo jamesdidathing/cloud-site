@@ -1,0 +1,42 @@
+# For macOS/Linux
+touch .gitignore
+
+# For Windows
+type nul > .gitignore
+```
+
+Open `.gitignore` in your text editor and add:
+```
+# Build output
+_site/
+dist/
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment variables
+.venv
+# AWS credentials
+.aws/
+credentials
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+.cache/
