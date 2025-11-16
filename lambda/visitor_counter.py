@@ -7,17 +7,17 @@ eventbridge = boto3.client('events')  # For sending events
 dynamodb = boto3.resource('dynamodb')  # For the visitor counter
 table = dynamodb.Table('visitor-count')  # Your DynamoDB table
 
-# Name of the EventBridge bus we'll create
+# Name of the EventBridge bus we create
 EVENT_BUS_NAME = 'visitor-events'
 
 def lambda_handler(event, context):
     """
-    This function runs every time someone visits your website.
+    This function runs every time someone visits the website.
     
     It does three things:
     1. Enriches the event with useful metadata
     2. Sends the enriched event to EventBridge
-    3. Increments the visitor counter in DynamoDB (backward compatibility)
+    3. Increments the visitor counter in DynamoDB
     """
     
     try:
@@ -34,12 +34,12 @@ def lambda_handler(event, context):
         # ========================================        
         enriched_event = {
             'timestamp': datetime.utcnow().isoformat(),  
-            'event_type': 'page_view',  # Could be 'button_click', 'form_submit', etc.
+            'event_type': 'page_view',  # Could be 'button_click', 'form_submit'
             'source_ip': identity.get('sourceIp', 'unknown'),  # Visitor's IP address
             'user_agent': identity.get('userAgent', 'unknown'),  # Browser info
             'request_id': context.aws_request_id,  # Unique ID for this Lambda invocation
             'domain': request_context.get('domainName', 'unknown'),  # Your domain
-            'path': request_context.get('path', '/'),  # Which page (/about, /projects, etc.)
+            'path': request_context.get('path', '/'),  # Which page (/about, /projects, etc.) (don't think this works atm)
             'http_method': request_context.get('httpMethod', 'GET'),  # GET, POST, etc.
             'country': identity.get('country', 'unknown'),  # Visitor's country
             'referer': event.get('headers', {}).get('referer', 'direct'),  # Google, direct, etc.
