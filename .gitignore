@@ -1,12 +1,3 @@
-# For macOS/Linux
-touch .gitignore
-
-# For Windows
-type nul > .gitignore
-```
-
-Open `.gitignore` in your text editor and add:
-```
 # Build output
 _site/
 dist/
@@ -17,6 +8,7 @@ package-lock.json
 
 # Environment variables
 .venv
+*/__pycache__
 # AWS credentials
 .aws/
 credentials
