@@ -44,6 +44,42 @@ def test_ingestion_returns_200():
         assert response['statusCode'] == 200
         assert 'count' in json.loads(response['body'])
 
+def test_database_actually_updates():
+    """
+    Verify database is actually updated, not just response returned
+    """
+    
+    context = Mock()
+    context.aws_request_id = 'test-db-update'
+    
+    event = {
+        'requestContext': {
+            'identity': {},
+            'domainName': 'test.com',
+            'path': '/',
+            'httpMethod': 'GET'
+        },
+        'headers': {}
+    }
+    
+    with patch('visitor_counter.eventbridge') as mock_eb, \
+        patch('visitor_counter.table') as mock_table:
+        
+        mock_table.get_item.return_value = {'Item': {'id': 'visitor-count', 'count': 42}}
+        mock_eb.put_events.return_value = {'Entries': [{'EventId': '123'}]}
+        
+        # Call Lambda
+        response = ingestion_handler(event, context)
+
+        body = json.loads(response['body'])
+        assert body['count'] == 43
+        
+        mock_table.update_item.assert_called_once()
+        
+        update_call = mock_table.update_item.call_args
+        assert update_call[1]['Key'] == {'id': 'visitor-count'}
+        assert update_call[1]['ExpressionAttributeValues'] == {':val': 43}
+
 def test_ingestion_increments_counter():
     """Test that counter goes up by 1"""
     
@@ -94,3 +130,46 @@ def test_writer_saves_to_s3():
         
         # Check it called S3
         mock_s3.put_object.assert_called_once()
+
+def test_first_visitor_edge_case():
+    """
+    Edge case - very first visitor
+    
+    When no one has visited the site yet, DynamoDB has no item.
+    Lambda should:
+    1. Create the item with count=0
+    2. Increment to 1
+    3. Return 1
+    """
+    
+    context = Mock()
+    context.aws_request_id = 'test-first-visitor'
+    
+    event = {
+        'requestContext': {
+            'identity': {},
+            'domainName': 'test.com',
+            'path': '/',
+            'httpMethod': 'GET'
+        },
+        'headers': {}
+    }
+    
+    with patch('visitor_counter.eventbridge') as mock_eb, \
+         patch('visitor_counter.table') as mock_table:
+        
+        mock_table.get_item.return_value = {}  # No 'Item' key
+        mock_eb.put_events.return_value = {'Entries': [{'EventId': '123'}]}
+        
+        response = ingestion_handler(event, context)
+        
+        body = json.loads(response['body'])
+        assert body['count'] == 1
+
+        mock_table.put_item.assert_called_once()
+        put_call = mock_table.put_item.call_args
+        assert put_call[1]['Item'] == {'id': 'visitor-count', 'count': 0}
+        
+        mock_table.update_item.assert_called_once()
+        update_call = mock_table.update_item.call_args
+        assert update_call[1]['ExpressionAttributeValues'] == {':val': 1}
