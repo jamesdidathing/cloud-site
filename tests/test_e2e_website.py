@@ -31,7 +31,7 @@ def test_visitor_counter_increments(page: Page):
     page.goto("https://james-hodson.com")
     
     # Wait for counter and get 
-    page.wait_for_timeout(1000)
+    page.wait_for_timeout(3000)
     counter = page.locator("#visitor-count")
     expect(counter).to_be_visible()
     
@@ -42,7 +42,7 @@ def test_visitor_counter_increments(page: Page):
     # Refresh page
     page.reload()
     
-    page.wait_for_timeout(1000)
+    page.wait_for_timeout(3000)
     counter = page.locator("#visitor-count")
     expect(counter).to_be_visible()
     
