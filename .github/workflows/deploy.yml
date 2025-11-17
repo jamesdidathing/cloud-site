@@ -101,4 +101,4 @@ jobs:
       
       - name: Run E2E tests
         run: |
-          pytest tests/test_website.py -v
+          pytest tests/test_e2e_website.py -v
