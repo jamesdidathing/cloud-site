@@ -3,6 +3,8 @@
 A serverless resume website built on AWS Cloud, with automatic deployment with GitHub Actions.
 
 ![deploy workflow](https://github.com/jamesdidathing/cloud-site/actions/workflows/deploy.yml/badge.svg)
+![push workflow](https://github.com/jamesdidathing/cloud-site/actions/workflows/push.yml/badge.svg)
+
 
 ## Live Site
 
