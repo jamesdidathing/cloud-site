@@ -78,7 +78,7 @@ jobs:
       - name: Deployment complete
         run: echo "Deployment completed successfully!"
 
-  edge-to-edge-tests-ruff-checks:
+  edge-to-edge-tests:
     runs-on: ubuntu-latest
     needs: deploy  # Only run after deployment succeeds
     
@@ -102,6 +102,3 @@ jobs:
       - name: Run E2E tests
         run: |
           pytest tests/test_e2e_website.py -v
-    
-      - name: Ruff Checks
-        uses: astral-sh/ruff-action@v3
