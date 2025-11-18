@@ -1,0 +1,60 @@
+[project]
+name = "cloud-resume"
+version = "0.1.0"
+description = "Serverless cloud resume with visitor counter"
+requires-python = ">=3.12"
+readme = "README.md"
+
+# Production dependencies
+dependencies = [
+    "boto3>=1.40.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.4.0",
+    "pytest-playwright>=0.7.0",
+    "pytest-cov>=7.0.0",
+    "pytest-mock>=3.15.0",
+    "playwright>=1.56.0",
+    "moto>=5.1.0",
+    "ruff>=0.14.0",
+    "requests>=2.32.0",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort
+    "W",   # pycodestyle warnings
+    "N",   # pep8-naming
+]
+ignore = [
+    "E501",  # line too long (handled by formatter)
+]
+
+exclude = [
+    ".git",
+    ".venv",
+    "venv",
+    "_site",
+    "node_modules",
+    ".terraform",
+    "__pycache__",
+    "*.pyc",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+# Pytest configuration
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+addopts = "-v --tb=short"
