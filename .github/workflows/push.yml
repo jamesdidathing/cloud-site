@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  unit-tests:
+  unit-tests-and-ruff-checks:
     runs-on: ubuntu-latest
     
     steps:
@@ -29,3 +29,11 @@ jobs:
       - name: Run unit tests
         run: |
           pytest tests/test_lambda.py -v
+
+      - name: Lint with Ruff
+        run: |
+          ruff check lambda/ tests/
+      
+      - name: Check formatting with Ruff
+        run: |
+          ruff format --check lambda/ tests/
