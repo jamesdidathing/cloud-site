@@ -1,13 +1,13 @@
 import json
-import sys
 import os
-from unittest.mock import Mock, patch, MagicMock
+import sys
+from unittest.mock import MagicMock, Mock, patch
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../lambda"))
 sys.modules["boto3"] = MagicMock()
 
-from visitor_counter import lambda_handler as ingestion_handler  # noqa: E402
 from event_writer import lambda_handler as writer_handler  # noqa: E402
+from visitor_counter import lambda_handler as ingestion_handler  # noqa: E402
 
 os.environ["AWS_DEFAULT_REGION"] = "us-east-1"
 

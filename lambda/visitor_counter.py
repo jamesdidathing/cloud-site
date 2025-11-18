@@ -1,6 +1,7 @@
-import boto3
 import json
 from datetime import datetime
+
+import boto3
 
 # Initialize AWS service clients
 eventbridge = boto3.client("events")  # For sending events

@@ -1,6 +1,7 @@
-import boto3
 import json
 from datetime import datetime
+
+import boto3
 
 # Initialize S3 client
 s3 = boto3.client("s3")
