@@ -83,7 +83,7 @@ uv run playwright install chromium
 uv run pytest tests/test_website.py -v
 ```
 
-## 🔄 CI/CD Pipeline
+## CI/CD Pipeline
 
 ### Workflows
 
