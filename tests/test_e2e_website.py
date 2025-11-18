@@ -95,7 +95,6 @@ def test_mobile_view(page: Page):
 
     page.set_viewport_size({"width": 375, "height": 667})  # iPhone size
 
-    # Visit page
     page.goto("https://james-hodson.com")
 
     counter = page.locator("#visitor-count")
