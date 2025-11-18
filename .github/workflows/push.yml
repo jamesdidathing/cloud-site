@@ -24,11 +24,16 @@ jobs:
       
       - name: Install dependencies
         run: |
-          pip install pytest ruff
+          pip install -r requirements.txt
       
       - name: Run unit tests
         run: |
           pytest tests/test_lambda.py -v
 
-      - name: Ruff Checks
-        uses: astral-sh/ruff-action@v3
+      - name: Lint with Ruff
+        run: |
+          ruff check
+      
+      - name: Check formatting with Ruff
+        run: |
+          ruff format --check
