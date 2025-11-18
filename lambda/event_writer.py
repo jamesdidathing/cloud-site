@@ -38,7 +38,9 @@ def lambda_handler(event, context):
         day = timestamp.strftime("%d")
         hour = timestamp.strftime("%H")
 
-        file_name = f"events/year={year}/month={month}/day={day}/hour={hour}/{context.aws_request_id}.json"
+        file_name = (
+            f"events/year={year}/month={month}/day={day}/hour={hour}/{context.aws_request_id}.json"
+        )
 
         # PART 3: Write to S3
         # ====================

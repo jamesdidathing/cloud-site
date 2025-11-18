@@ -46,9 +46,7 @@ def lambda_handler(event, context):
             ),  # Which page (/about, /projects, etc.) (don't think this works atm)
             "http_method": request_context.get("httpMethod", "GET"),  # GET, POST, etc.
             "country": identity.get("country", "unknown"),  # Visitor's country
-            "referer": event.get("headers", {}).get(
-                "referer", "direct"
-            ),  # Google, direct, etc.
+            "referer": event.get("headers", {}).get("referer", "direct"),  # Google, direct, etc.
         }
 
         # PART 3: Send event to EventBridge
@@ -104,9 +102,7 @@ def lambda_handler(event, context):
             "body": json.dumps(
                 {
                     "count": new_count,  # Visitor counter (for website display)
-                    "event_id": response["Entries"][0].get(
-                        "EventId"
-                    ),  # EventBridge event ID
+                    "event_id": response["Entries"][0].get("EventId"),  # EventBridge event ID
                     "timestamp": enriched_event["timestamp"],
                 }
             ),

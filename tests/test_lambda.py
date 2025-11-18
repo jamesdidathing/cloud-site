@@ -31,13 +31,12 @@ def test_ingestion_returns_200():
     }
 
     # Mock AWS services so we don't call real AWS
-    with patch("visitor_counter.eventbridge") as mock_eb, patch(
-        "visitor_counter.table"
-    ) as mock_table:
+    with (
+        patch("visitor_counter.eventbridge") as mock_eb,
+        patch("visitor_counter.table") as mock_table,
+    ):
         # Set up fake responses
-        mock_table.get_item.return_value = {
-            "Item": {"id": "visitor-count", "count": 10}
-        }
+        mock_table.get_item.return_value = {"Item": {"id": "visitor-count", "count": 10}}
         mock_eb.put_events.return_value = {"Entries": [{"EventId": "123"}]}
 
         # Call the Lambda
@@ -66,12 +65,11 @@ def test_database_actually_updates():
         "headers": {},
     }
 
-    with patch("visitor_counter.eventbridge") as mock_eb, patch(
-        "visitor_counter.table"
-    ) as mock_table:
-        mock_table.get_item.return_value = {
-            "Item": {"id": "visitor-count", "count": 42}
-        }
+    with (
+        patch("visitor_counter.eventbridge") as mock_eb,
+        patch("visitor_counter.table") as mock_table,
+    ):
+        mock_table.get_item.return_value = {"Item": {"id": "visitor-count", "count": 42}}
         mock_eb.put_events.return_value = {"Entries": [{"EventId": "123"}]}
 
         # Call Lambda
@@ -103,12 +101,11 @@ def test_ingestion_increments_counter():
         "headers": {},
     }
 
-    with patch("visitor_counter.eventbridge") as mock_eb, patch(
-        "visitor_counter.table"
-    ) as mock_table:
-        mock_table.get_item.return_value = {
-            "Item": {"id": "visitor-count", "count": 42}
-        }
+    with (
+        patch("visitor_counter.eventbridge") as mock_eb,
+        patch("visitor_counter.table") as mock_table,
+    ):
+        mock_table.get_item.return_value = {"Item": {"id": "visitor-count", "count": 42}}
         mock_eb.put_events.return_value = {"Entries": [{"EventId": "123"}]}
 
         response = ingestion_handler(event, context)
@@ -166,9 +163,10 @@ def test_first_visitor_edge_case():
         "headers": {},
     }
 
-    with patch("visitor_counter.eventbridge") as mock_eb, patch(
-        "visitor_counter.table"
-    ) as mock_table:
+    with (
+        patch("visitor_counter.eventbridge") as mock_eb,
+        patch("visitor_counter.table") as mock_table,
+    ):
         mock_table.get_item.return_value = {}  # No 'Item' key
         mock_eb.put_events.return_value = {"Entries": [{"EventId": "123"}]}
 
