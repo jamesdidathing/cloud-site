@@ -24,7 +24,7 @@ jobs:
       
       - name: Install dependencies
         run: |
-          pip install pytest
+          pip install pytest ruff
       
       - name: Run unit tests
         run: |
@@ -32,8 +32,8 @@ jobs:
 
       - name: Lint with Ruff
         run: |
-          ruff check lambda/ tests/
+          ruff check
       
       - name: Check formatting with Ruff
         run: |
-          ruff format --check lambda/ tests/
+          ruff format --check
