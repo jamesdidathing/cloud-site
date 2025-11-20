@@ -1,4 +1,5 @@
 import json
+import urllib.request
 from datetime import datetime
 
 import boto3
@@ -10,6 +11,36 @@ table = dynamodb.Table("visitor-count")  # Your DynamoDB table
 
 # Name of the EventBridge bus we create
 EVENT_BUS_NAME = "visitor-events"
+
+
+def get_geolocation_data(ip_address):
+    """Get geolocation data from IP address using ip-api.com"""
+    if ip_address == "unknown" or not ip_address:
+        return {
+            "country": "unknown",
+            "city": "unknown", 
+            "isp": "unknown",
+            "org": "unknown"
+        }
+    
+    try:
+        # Use ip-api.com free service (1000 requests per minute limit)
+        url = f"http://ip-api.com/json/{ip_address}?fields=country,city,isp,org"
+        with urllib.request.urlopen(url, timeout=2) as response:
+            data = json.loads(response.read().decode())
+            return {
+                "country": data.get("country", "unknown"),
+                "city": data.get("city", "unknown"),
+                "isp": data.get("isp", "unknown"), 
+                "org": data.get("org", "unknown")
+            }
+    except Exception:
+        return {
+            "country": "unknown",
+            "city": "unknown",
+            "isp": "unknown", 
+            "org": "unknown"
+        }
 
 
 def lambda_handler(event, context):
@@ -34,10 +65,27 @@ def lambda_handler(event, context):
 
         # PART 2: Enrich the event with metadata
         # ========================================
+        source_ip = identity.get("sourceIp", "unknown")
+        
+        # Try CloudFront headers first, fallback to IP geolocation
+        country = event.get("headers", {}).get("cloudfront-viewer-country")
+        if not country or country == "unknown":
+            geo_data = get_geolocation_data(source_ip)
+            country = geo_data["country"]
+            city = geo_data["city"]
+            isp = geo_data["isp"]
+            org = geo_data["org"]
+        else:
+            # If CloudFront provides country, still get other data from IP
+            geo_data = get_geolocation_data(source_ip)
+            city = geo_data["city"]
+            isp = geo_data["isp"]
+            org = geo_data["org"]
+        
         enriched_event = {
             "timestamp": datetime.utcnow().isoformat(),
             "event_type": "page_view",  # Could be 'button_click', 'form_submit'
-            "source_ip": identity.get("sourceIp", "unknown"),  # Visitor's IP address
+            "source_ip": source_ip,  # Visitor's IP address
             "user_agent": identity.get("userAgent", "unknown"),  # Browser info
             "request_id": context.aws_request_id,  # Unique ID for this Lambda invocation
             "domain": request_context.get("domainName", "unknown"),  # Your domain
@@ -45,7 +93,10 @@ def lambda_handler(event, context):
                 "path", "/"
             ),  # Which page (/about, /projects, etc.) (don't think this works atm)
             "http_method": request_context.get("httpMethod", "GET"),  # GET, POST, etc.
-            "country": identity.get("country", "unknown"),  # Visitor's country
+            "country": country,  # Visitor's country
+            "city": city,  # Visitor's city
+            "isp": isp,  # Internet Service Provider
+            "org": org,  # Organization
             "referer": event.get("headers", {}).get("referer", "direct"),  # Google, direct, etc.
         }
 
