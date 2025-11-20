@@ -94,7 +94,7 @@ def test_all_pages_load(page: Page):
 def test_mobile_view(page: Page):
     """Test that website works on mobile devices"""
 
-    page.set_viewport_size({"width": 375, "height": 667})  # iPhone size
+    page.set_viewport_size({"width": 375, "height": 667})
 
     page.goto("https://james-hodson.com")
 
