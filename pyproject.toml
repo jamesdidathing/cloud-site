@@ -22,6 +22,11 @@ dev = [
     "requests>=2.32.0",
 ]
 
+pipeline = [
+    "pandas>=2.2.0",
+    "boto3>=1.40.0",
+]
+
 [tool.ruff]
 target-version = "py312"
 line-length = 100
