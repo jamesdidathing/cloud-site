@@ -16,13 +16,8 @@ EVENT_BUS_NAME = "visitor-events"
 def get_geolocation_data(ip_address):
     """Get geolocation data from IP address using ip-api.com"""
     if ip_address == "unknown" or not ip_address:
-        return {
-            "country": "unknown",
-            "city": "unknown", 
-            "isp": "unknown",
-            "org": "unknown"
-        }
-    
+        return {"country": "unknown", "city": "unknown", "isp": "unknown", "org": "unknown"}
+
     try:
         # Use ip-api.com free service (1000 requests per minute limit)
         url = f"http://ip-api.com/json/{ip_address}?fields=country,city,isp,org"
@@ -31,16 +26,11 @@ def get_geolocation_data(ip_address):
             return {
                 "country": data.get("country", "unknown"),
                 "city": data.get("city", "unknown"),
-                "isp": data.get("isp", "unknown"), 
-                "org": data.get("org", "unknown")
+                "isp": data.get("isp", "unknown"),
+                "org": data.get("org", "unknown"),
             }
     except Exception:
-        return {
-            "country": "unknown",
-            "city": "unknown",
-            "isp": "unknown", 
-            "org": "unknown"
-        }
+        return {"country": "unknown", "city": "unknown", "isp": "unknown", "org": "unknown"}
 
 
 def lambda_handler(event, context):
@@ -66,7 +56,7 @@ def lambda_handler(event, context):
         # PART 2: Enrich the event with metadata
         # ========================================
         source_ip = identity.get("sourceIp", "unknown")
-        
+
         # Try CloudFront headers first, fallback to IP geolocation
         country = event.get("headers", {}).get("cloudfront-viewer-country")
         if not country or country == "unknown":
@@ -81,7 +71,7 @@ def lambda_handler(event, context):
             city = geo_data["city"]
             isp = geo_data["isp"]
             org = geo_data["org"]
-        
+
         enriched_event = {
             "timestamp": datetime.utcnow().isoformat(),
             "event_type": "page_view",  # Could be 'button_click', 'form_submit'
