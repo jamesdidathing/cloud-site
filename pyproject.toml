@@ -63,3 +63,11 @@ indent-style = "space"
 testpaths = ["tests"]
 python_files = "test_*.py"
 addopts = "-v --tb=short"
+
+[tool.uv]
+dev-dependencies = [
+    "ty>=0.0.5",
+]
+
+[tool.ty.rules]
+unresolved-import = "ignore"
