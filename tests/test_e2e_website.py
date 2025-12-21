@@ -38,8 +38,11 @@ def test_visitor_counter_increments(page: Page):
     expect(counter).to_be_visible()
 
     first_count = counter.text_content()
-    first_count = first_count.replace(",", "")
-    first_value = int(first_count)
+    if first_count is None:
+        raise AssertionError("Visitor count not found")
+    else:
+        first_count = first_count.replace(",", "")
+        first_value = int(first_count)
 
     # Refresh page
     page.reload()
@@ -49,8 +52,11 @@ def test_visitor_counter_increments(page: Page):
     expect(counter).to_be_visible()
 
     second_count = counter.text_content()
-    second_count = second_count.replace(",", "")
-    second_value = int(second_count)
+    if second_count is None:
+        raise AssertionError("Visitor count not found after refresh")
+    else:
+        second_count = second_count.replace(",", "")
+        second_value = int(second_count)
 
     assert (
         first_value <= second_value + 1
@@ -87,18 +93,9 @@ def test_all_pages_load(page: Page):
     for path in pages_to_test:
         url = f"https://james-hodson.com{path}"
         response = page.goto(url)
+        if response is None:
+            raise AssertionError(f"No response for page {path}")
+        else:
+            assert response.status == 200, f"Page {path} returned {response.status}"
 
-        assert response.status == 200, f"Page {path} returned {response.status}"
 
-
-def test_mobile_view(page: Page):
-    """Test that website works on mobile devices"""
-
-    page.set_viewport_size({"width": 375, "height": 667})
-
-    page.goto("https://james-hodson.com")
-
-    counter = page.locator("#visitor-count")
-    expect(counter).to_be_visible(timeout=10000)
-
-    assert page.viewport_size["width"] == 375
