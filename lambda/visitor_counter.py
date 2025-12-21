@@ -73,7 +73,7 @@ def lambda_handler(event, context):
             org = geo_data["org"]
 
         enriched_event = {
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now().isoformat(),
             "event_type": "page_view",  # Could be 'button_click', 'form_submit'
             "source_ip": source_ip,  # Visitor's IP address
             "user_agent": identity.get("userAgent", "unknown"),  # Browser info
