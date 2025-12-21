@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  unit-tests-and-ruff-checks:
+  unit-tests-and-ruff-checks-and-type-checks:
     runs-on: ubuntu-latest
     
     steps:
@@ -34,4 +34,8 @@ jobs:
       - name: Lint with Ruff
         run: |
           uv run ruff check
+
+      - name: Type check with ty
+        run: |
+          uv run ty check
     
