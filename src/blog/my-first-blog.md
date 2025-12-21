@@ -10,13 +10,13 @@ tags:
 
 ## Why bother?
 
-Personally, I relocated to Australia for my partners job so I had to put a pause on my job in the UK and go on a career break. Now - most would think this is a great time to just relax, chill out and not do any "work" for a while. Unfortunately though, my brain doesn't allow that and years of educational stress means I feel like I should always be doing *something*...
+Personally, I relocated to Australia for my partners job so I had to put a pause on my job in the UK and go on a career break. Now, most would think this is a great time to just relax, chill out and not do any "work" for a while. Unfortunately though, my brain doesn't allow that and years of educational stress means I feel like I should always be doing __something__...
 
 So how can someone keep advancing their career, when on a break from it?
 
 I decided to upskill myself! One thing I find with learning on the job, is that you only ever learn the things you need for the job you are doing, and nothing else. What if I want to use a new technology? I need to find something that my job wants, and then I can go and learn it after.
 
-One thing I have always been interested in learning is ___Cloud Technology___. A scary, new and quite abstract thing to me at the time I started, and something that if done wrong can really rack up a credit bill. A great way to learn! 
+One thing I have always been interested in learning is ___Cloud Technology___. A scary, new and quite abstract thing to me at the time I started, and something that if done wrong can really rack up an expensive credit bill. A great way to learn! 
 
 This post is all about my journey through the [Cloud Resume Challenge](https://cloudresumechallenge.dev/docs/the-challenge/aws/_), and I would advocate anyone wanting to learning the same things to take part. This post isn't going to talk about the intricate details of how each part works and how I set it up (there's hundreds of those), but more of what my experience was like through all of this and what I learned throughout.
 
@@ -42,35 +42,35 @@ The entire infrastructure is managed with Terraform, and GitHub Actions handles 
 
 ### CloudFront Caching vs Real-Time Updates
 
-**The Problem**: When it came to creating some tests for my website and its functions, I found that the visitor counter was causing them to fail. It turns out that CloudFront was caching it's response for 60 seconds, meaning if you refreshed within this time frame - it would not update the counter! This was mainly a problem for my tests, but also made the website feel a bit broken.
+**Problem**: When it came to creating some tests for my website and its functions, I found that the visitor counter was causing them to fail. It turns out that CloudFront was caching it's response for 60 seconds, meaning if you refreshed within this time frame, it would not update the counter! This was mainly a problem for my tests, but also made the website feel a bit... broken.
 
-**The Solution**: I had to balance performance with freshness. After testing, I settled on a 15-second cache - short enough to feel responsive, long enough to reduce Lambda costs and fix my tests. I had to adjust my tests to allow for this refresh to take place.
+**Solution**: After testing, I settled on a 15-second cache. This was short enough to feel responsive, but long enough to reduce Lambda costs and fix my tests. I had to adjust my tests to allow for this refresh to take place with a simple sleep statement. 
 
 
-### Challenge 2: Moving from Console to Infrastructure as Code
+### Moving from Console to Infrastructure as Code
 
-**The Problem**: Working through the challenge, it starts with just using the AWS Console (click buttons on a UI). This was great for learning and seeing what I was actually doing, but what happens if I need to share what I have done? What if we need to version control the settings we've used? 
+**Problem**: Working through the challenge, it starts with just using the AWS Console (click buttons on a UI). This was great for learning and seeing what I was actually doing, but what happens if I need to share what I have done? What if we need to version control the settings we've used? It is pretty time consuming to do all of that through a web browser interface.
 
-**The Solution**: This is where we use Infrastructure as Code with a tool such as **Terraform**. I had to import every resource we used - S3 buckets, Lambda functions, API Gateway, CloudFront distribution, Route 53 records, and more.  Each resource type had different import syntax. It took __HOURS__ of careful work, but in the end it was worth it. Once set up, we could implement new changes really easily and redeploy. Even better, we can version control it.
+**Solution**: This is where we use Infrastructure as Code with a tool called **Terraform**. I had to import every resource we used (S3 buckets, Lambda functions, API Gateway, CloudFront distribution, Route 53 records...), and each resource type had different import syntax. It took genuinley __hours__ of work, but once set up we could implement new changes really easily and redeploy. Plus, we can even version control it.
 
 **Lesson Learned**: Start with Infrastructure as Code from day one. Migrating later is painful. But doing it taught me how Terraform state management works at a deep level.
 
 
 
-### Challenge 5: Python Dependency Management
+### Python Dependency Management
 
-**The Problem**: I started with pip and requirements.txt (for my own ease, bigger projects I would not start with this), but managing dependencies across local development, CI/CD, and Lambda deployment was messy. Different environments had different package versions. 
+**Problem**: I started with pip and requirements.txt (for my own ease, bigger projects I would not start with this), but managing dependencies across local development, CI/CD, and Lambda deployment was messy. Different environments had different package versions. 
 
-**The Solution**: I migrated to `uv` and `pyproject.toml`. This gave me proper dependency separation (production vs dev), lockfiles for reproducibility, and much faster installs. The `uv.lock` file ensures everyone gets identical package versions. I'm a big fan of `uv` and have used it quite a lot in my career, so this was always going to be the solution.
+**Solution**: I migrated to `uv` and `pyproject.toml`. This gave me proper dependency separation (production vs dev), lockfiles for reproducibility, and much faster installs. The `uv.lock` file ensures everyone gets identical package versions. I'm a big fan of `uv` and have used it quite a lot in my career, so this was always going to be the solution.
 
-**Lesson Learned**: Modern Python tooling makes a huge difference (especially ones written in Rust). Invest time in proper dependency management early - it pays off in reliability and team collaboration.
+**Lesson Learned**: Modern Python tooling makes a huge difference (especially ones written in Rust). Something I have tried to do is keep up to date with new technology to use, and not settle for the ones I already know. 
 
 
-### Challenge 5: Enriched Metadata
+### Enriched Metadata
 
-**The Problem**: Towards the end of the challenge, I decided to introduce some Python pipelines for extracting and analysing the visitor event data I was collecting. I quickly realised this was not working as intended though, one of the main stats I wanted to track was **where** my vistors were visiting from. The approach I originally used was not getting this data though. I wanted to fix this, but also include some more metadata to each visit which I might find useful.
+**Problem**: Towards the end of the challenge, I decided to introduce some Python pipelines for extracting and analysing the visitor event data I was collecting. I quickly realised this was not working as intended though, one of the main stats I wanted to track was __where__ my vistors were visiting from. The approach I originally used was not getting this data though. I wanted to fix this, but also include some more metadata to each visit which I might find useful.
 
-**The Solution**: I used the IP of each visit to gather more data, like the country, ISP and even the city. Obviously this data can be skewed (VPN's exist) but it's a good indication generally of where the visits are coming from. Especially if I apply for a job, I can see if I get a visit from the city the job is in! This data is never shared and is only used for myself.
+**Solution**: I used the IP of each visit to gather more data, like the country, ISP and even the city. Obviously this data can be skewed (VPN's exist) but it's a good indication generally of where the visits are coming from. Especially if I apply for a job, I can see if I get a visit from the city the job is in!
 
 **Lesson Learned**: Metadata enrichment is a great approach for a more data engineering pipeline, and there are tons of tools out there to use to help with this.  
 
@@ -104,26 +104,22 @@ The final system includes:
 ## Key Lessons
 
 ### 1. Serverless Isn't Always Cheaper, But It Scales Better
-My entire infrastructure costs $1-2/month because of AWS free tier. But the real value is scalability - if my site suddenly got 10,000 visitors, it would handle it without any changes. Traditional hosting would require manual intervention.
+My entire infrastructure costs $1-2/month because of AWS free tier, which is not too much. However, if my site suddenly got 10,000 visitors, it would handle it without any changes whereas traditional hosting would require manual intervention.
 
-### 2. Infrastructure as Code Is Non-Negotiable
-Being able to `terraform apply` and rebuild my entire infrastructure in minutes is incredibly powerful. It's also documentation - anyone can read my Terraform files and understand exactly what's deployed.
+### 2. Infrastructure as Code
+Being able to `terraform apply` and rebuild my entire infrastructure in minutes is incredibly powerful. It's also documentation though, anyone can read my Terraform files and understand exactly what's deployed.
 
-### 3. Observability Matters From Day One
+### 3. Observability
 Building the analytics pipeline taught me the value of instrumentation. I can now see traffic patterns, understand user behavior, and debug issues. 
 
 ### 4. CI/CD Saves Time and Reduces Errors
-Pushing to GitHub and having tests run automatically, then deploying if they pass, is game-changing. No more "did I remember to invalidate the CloudFront cache?" mistakes.
+Pushing to GitHub and having tests run automatically, then deploying if they pass, is incredibly useful. This is something I've done in previous work, but creating CI/CD pipelines for new projects always helps with learning.
 
 ### 5. Real Production Experience Is Different Than Tutorials
-Tutorials show happy paths. Real projects involve CORS debugging, cache invalidation strategies, test flakiness, dependency conflicts, and state management. This project gave me production-level experience which I can use in the future.
-
+Followinbg tutorials is all well and good, but a real project where you aren't just copy and pasting code gave me actual experience. All the bugs and issues I had to get over myself were great for learning, and felt like a production-level project.
 
 ## Try It Yourself
 
-The [Cloud Resume Challenge](https://cloudresumechallenge.dev/) is an excellent way to learn cloud technologies hands-on. Don't just follow tutorials - build something real, face real problems, and learn how production systems actually work.
-
-My advice: Start simple, but build it properly. Use IaC from day one, write tests, set up CI/CD, and add observability. These aren't "nice-to-haves" - they're how real cloud applications are built.
-
+The [Cloud Resume Challenge](https://cloudresumechallenge.dev/) is an excellent way to learn cloud technologies hands-on. Don't just follow tutorials, build something real, face real problems, and learn how production systems actually work.
 
 **Update**: This post is part of my learning journey in cloud engineering. Follow my progress as I continue building and documenting!
