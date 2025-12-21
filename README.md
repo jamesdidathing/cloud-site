@@ -90,6 +90,7 @@ uv run pytest tests/test_website.py -v
 **On every push to main/develop:**
 - ✅ Run unit tests
 - ✅ Lint with Ruff
+- ✅ Type checking with Ty
 - ✅ Check code formatting
 
 **Manual deployment trigger:**
