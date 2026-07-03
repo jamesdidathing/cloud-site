@@ -3,44 +3,44 @@ layout: base.njk
 title: James Hodson - Welcome
 ---
 
-<div class="hero">
-    <nav class="navbar">
-        <ul class="nav-links">
-            <li><a href="/" class="active">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/projects">Projects</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="/contact">Contact</a></li>
-        </ul>
-    </nav>
+<section class="hero">
+    <div class="title-block">
+        <p class="title-cmd typed"><span class="prompt">james@aws:~$</span> figlet "james hodson"</p>
+        <div class="ascii-scroll"><pre class="ascii-title">
+      _                      __           __
+     (_)__ ___ _  ___ ___   / /  ___  ___/ /__ ___  ___
+    / / _ `/  ' \/ -_|_-&lt;  / _ \/ _ \/ _  (_-&lt;/ _ \/ _ \
+ __/ /\_,_/_/_/_/\__/___/ /_//_/\___/\_,_/___/\___/_//_/
+|___/
+</pre></div>
+    </div>
+    {% set latestPost = collections.post | reverse | first %}
+    <div class="term-session">
+        <p class="term-line"><span class="prompt">james@aws:~$</span> ls ~/projects</p>
+        <p class="term-out"><a href="/projects/">cloud-site/</a> — this website: S3, CloudFront, Lambda, all Terraform</p>
+        <p class="term-out"><a href="/projects/">football-analysis/</a> — Premier League data, scraped and visualised in Python</p>
+        <p class="term-out"><a href="/projects/">rust-chip8/</a> — a Chip-8 emulator, built to learn Rust</p>
 
-    <div class="hero-content">
-        <pre class="ascii-name">
-   ▗▖▗▞▀▜▌▄▄▄▄  ▗▞▀▚▖ ▄▄▄     ▗▖ ▗▖ ▄▄▄     ▐▌ ▄▄▄  ▄▄▄  ▄▄▄▄  
-   ▐▌▝▚▄▟▌█ █ █ ▐▛▀▀▘▀▄▄      ▐▌ ▐▌█   █    ▐▌▀▄▄  █   █ █   █ 
-   ▐▌     █   █ ▝▚▄▄▖▄▄▄▀     ▐▛▀▜▌▀▄▄▄▀ ▗▞▀▜▌▄▄▄▀ ▀▄▄▄▀ █   █ 
-▗▄▄▞▘                         ▐▌ ▐▌      ▝▚▄▟▌                 
-                                                               
-                                                               
-                                                               
-        </pre>
-        <h2 class="hero-subtitle"></h2>
-        <p class="hero-description">
-            Research Software Engineer specialising in software development and open, FAIR data. 
-            This website is built and deployed using the AWS cloud stack, and deployed via GitHub Actions!
-        </p>
-        
-        <div class="visitor-counter-wrapper">
-            <div class="visitor-counter">
-                <div class="counter-display">
-                    <div class="counter-icon">📊</div>
-                    <div class="counter-content">
-                        <div class="counter-label">Total Site Visitors</div>
-                        <div class="counter-number" id="visitor-count">Loading...</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <p class="term-line"><span class="prompt">james@aws:~$</span> cat blog/latest.md</p>
+        <p class="term-out"><a href="{{ latestPost.url }}">{{ latestPost.data.title }}</a> · {{ latestPost.date | dateReadable }}</p>
+
+        <p class="term-line"><span class="prompt">james@aws:~$</span> curl james-hodson.com/count</p>
+        <p class="term-out"><span id="visitor-count">...</span> visitors and counting</p>
+
+        <p class="term-line"><span class="prompt">james@aws:~$</span> <span class="cursor"></span></p>
+    </div>
+
+    <div class="actions">
+        <a href="/projects/" class="btn primary">view my work</a>
+        <a href="/about/" class="btn">about me</a>
+    </div>
+
+    <div class="social-row">
+        <a href="https://github.com/jamesdidathing" target="_blank">GitHub</a>
+        <span class="sep">/</span>
+        <a href="https://www.linkedin.com/in/james-a-hodson/" target="_blank">LinkedIn</a>
+    </div>
+</section>
 
 <script>
     fetch('https://james-hodson.com/count')
@@ -49,24 +49,6 @@ title: James Hodson - Welcome
             document.getElementById('visitor-count').innerText = data.count.toLocaleString();
         })
         .catch(error => {
-            document.getElementById('visitor-count').innerText = 'Error';
+            document.getElementById('visitor-count').innerText = '?';
         });
 </script>
-        
-        <div class="hero-buttons-wrapper">
-            <div class="hero-buttons">
-                <a href="/projects" class="btn-primary">🚀 View My Work</a>
-                <a href="/about" class="btn-secondary">👤 About Me</a>
-            </div>
-        </div>
-
-        <div class="social-links">
-            <a href="https://github.com/jamesdidathing" target="_blank" class="social-link github">
-                GitHub
-            </a>
-            <a href="https://www.linkedin.com/in/james-a-hodson/" target="_blank" class="social-link linkedin">
-                LinkedIn
-            </a>
-        </div>
-    </div>
-</div>

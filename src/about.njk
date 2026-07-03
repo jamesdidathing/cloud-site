@@ -3,89 +3,56 @@ layout: base.njk
 title: James Hodson - About
 ---
 
-<div class="hero">
-    <nav class="navbar">
-        <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/about" class="active">About</a></li>
-            <li><a href="/projects">Projects</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="/contact">Contact</a></li>
-        </ul>
-    </nav>
+<div class="title-block">
+    <p class="title-cmd"><span class="prompt">james@aws:~$</span> figlet "about me"<span class="cursor"></span></p>
+    <div class="ascii-scroll"><pre class="ascii-title">
+       __             __
+ ___ _/ /  ___  __ __/ /_  __ _  ___
+/ _ `/ _ \/ _ \/ // / __/ /  ' \/ -_)
+\_,_/_.__/\___/\_,_/\__/ /_/_/_/\__/
+</pre></div>
+</div>
 
-    <div class="hero-content">
-        <pre class="ascii-name">
-         ▗▄▖ ▗▖    ▄▄▄  █  ▐▌   ■      ▗▖  ▗▖▗▞▀▚▖
-        ▐▌ ▐▌▐▌   █   █ ▀▄▄▞▘▗▄▟▙▄▖    ▐▛▚▞▜▌▐▛▀▀▘
-        ▐▛▀▜▌▐▛▀▚▖▀▄▄▄▀        ▐▌      ▐▌  ▐▌▝▚▄▄▖
-        ▐▌ ▐▌▐▙▄▞▘             ▐▌      ▐▌  ▐▌     
-                                ▐▌                 
-                                          
-                                          
-        </pre>
-        <p class="hero-description">
-            Research Software Engineer specialising in software development, data engineering and open, FAIR data.
-        </p>
-        
-        <div class="about-content">
-            <div class="about-section">
-                <h2 class="about-heading">Background</h2>
-                <p class="about-text">  
-                    I am a Reserach Software Engineer with a background in Physics (BSc Hons), with extensive experience in data engineering and developing software solutions
-                    in scientific research, and making data FAIR (Findable, Accessible, Interoperable, Reusable) through open-source projects.
-                    I started my career as a Radiation Analyst before moving into computational/data science within nuclear fusion.
-                </p>
-            </div>
+<div class="section">
+    <h2>background</h2>
+    <p>
+        I am a Research Software Engineer with a background in Physics (BSc Hons), with extensive experience in data engineering and developing software solutions
+        in scientific research, and making data FAIR (Findable, Accessible, Interoperable, Reusable). I started my career as a computational/data science within 
+        nuclear fusion, before moving into a more DevOps role focusing on data capture and movement within a biomedical setting.
+    </p>
+</div>
 
-            <div class="about-section">
-                <h2 class="about-heading">Tech Stack & Interests</h2>
-                <div class="tech-categories">
-                    <div class="tech-category">
-                        <h3>Cloud & Infrastructure</h3>
-                        <ul class="about-list">
-                            <li>AWS Cloud Services (S3, Lambda, API Gateway, CloudFront)</li>
-                            <li>Docker containerisation</li>
-                            <li>Infrastructure as Code</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="tech-category">
-                        <h3>Programming Languages</h3>
-                        <ul class="about-list">
-                            <li>Python</li>
-                            <li>Rust</li>
-                            <li>C++</li>
-                            <li>SQL (data management)</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="tech-category">
-                        <h3>Research & Data Science</h3>
-                        <ul class="about-list">
-                            <li>Open science and FAIR data principles</li>
-                            <li>Data visualization and analysis tools</li>
-                            <li>Research software development best practices</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+<div class="section">
+    <h2>tech stack</h2>
+    <div class="contact-method">
+        <span class="label">cloud</span>
+        <span class="detail">AWS - S3, Lambda, API Gateway, CloudFront, EventBridge, Glue, Athena</span>
+    </div>
+    <div class="contact-method">
+        <span class="label">devops</span>
+        <span class="detail">Terraform · GitHub Actions · Docker · Kubernetes · Helm · uv</span>
+    </div>
+    <div class="contact-method">
+        <span class="label">languages</span>
+        <span class="detail">Python · Rust · C++ · SQL</span>
+    </div>
+    <div class="contact-method">
+        <span class="label">research</span>
+        <span class="detail">FAIR data · open science · data visualisation</span>
+    </div>
+</div>
 
-            <div class="about-section">
-                <h2 class="about-heading">Get In Touch</h2>
-                <p class="about-text">
-                    I'm always interested in discussing research software, open data, or potential collaborations. Feel free to reach out through any of the channels below.
-                </p>
-                
-                <div class="contact-links">
-                    <a href="https://www.linkedin.com/in/james-a-hodson/" target="_blank" class="contact-link linkedin">
-                        LinkedIn
-                    </a>
-                    <a href="https://github.com/jamesdidathing" target="_blank" class="contact-link github">
-                        GitHub
-                    </a>
-                </div>
-            </div>
-        </div>
+<div class="section">
+    <h2>get in touch</h2>
+    <p>
+        I'm always interested in discussing research software, open data, or potential collaborations. Feel free to reach out through any of the channels below.
+    </p>
+    <div class="contact-method">
+        <span class="label">GitHub</span>
+        <a href="https://github.com/jamesdidathing" target="_blank">jamesdidathing</a>
+    </div>
+    <div class="contact-method">
+        <span class="label">LinkedIn</span>
+        <a href="https://www.linkedin.com/in/james-a-hodson/" target="_blank">james-a-hodson</a>
     </div>
 </div>

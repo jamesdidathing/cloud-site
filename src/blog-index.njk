@@ -5,34 +5,35 @@ permalink: /blog/
 tags: []
 ---
 
-<div class="hero">
-  <nav class="navbar">
-    <ul class="nav-links">
-      <li><a href="/">Home</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/projects">Projects</a></li>
-      <li><a href="/blog" class="active">Blog</a></li>
-      <li><a href="/contact">Contact</a></li>
-    </ul>
-  </nav>
+<div class="title-block">
+    <p class="title-cmd"><span class="prompt">james@aws:~$</span> figlet "blog"<span class="cursor"></span></p>
+    <div class="ascii-scroll"><pre class="ascii-title">
+   __   __
+  / /  / /__  ___ _
+ / _ \/ / _ \/ _ `/
+/_.__/_/\___/\_, /
+            /___/
+</pre></div>
+</div>
+<p class="lede">
+    Writing about cloud engineering, research software, and things I'm learning along the way.
+</p>
 
-  <div class="blog-posts">
-    <h1>Blogs</h1>
+<div class="post-list">
     {% for post in collections.post | reverse %}
-      <article class="post-preview">
-        <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
-        <time datetime="{{ post.date | dateIso }}">{{ post.date | dateReadable }}</time>
-        <p>{{ post.data.description }}</p>
-        {% if post.data.tags %}
-          <div class="post-tags">
-            {% for tag in post.data.tags %}
-              {% if tag != "post" %}
-                <span class="tag">{{ tag }}</span>
-              {% endif %}
-            {% endfor %}
-          </div>
-        {% endif %}
-      </article>
+        <article class="post-preview">
+            <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
+            <time datetime="{{ post.date | dateIso }}">{{ post.date | dateReadable }}</time>
+            <p>{{ post.data.description }}</p>
+            {% if post.data.tags %}
+                <div class="tag-row">
+                    {% for tag in post.data.tags %}
+                        {% if tag != "post" %}
+                            <span class="tag">{{ tag }}</span>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </article>
     {% endfor %}
-  </div>
 </div>
